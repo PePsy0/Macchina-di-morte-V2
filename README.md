@@ -9,9 +9,9 @@ Link alla specifica della macchina:
 Nella cartella trovate il file .ino che riguarda la nostra macchina in questione, mentre nella NewFolder trovate il file della macchina da cui abbiamo preso spunto.
 
 TO-DO
-	□Funzioni di movimentazione, implementazione pulsanti su/giu manuali con encoder per velocità, implementazione corretta di finecorsa.
-	□Implementazione della cella di carico e la sua calibrazione
-	□Implementazione interfaccia matlab
-	□Implementazione estensimetri
-	□Creazione e implementazione di una calibrazione per il carro (che non si disallinei)
-	□Calibrazione estensimetri + morsa?
+□Funzioni di movimentazione, implementazione pulsanti su/giu manuali con encoder per velocità, implementazione corretta di finecorsa.
+□Implementazione della cella di carico e la sua calibrazione
+□Implementazione interfaccia matlab
+□Implementazione estensimetri
+□Creazione e implementazione di una calibrazione per il carro (che non si disallinei)
+□Calibrazione estensimetri + morsa?
