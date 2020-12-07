@@ -10,8 +10,13 @@ Nella cartella trovate il file .ino che riguarda la nostra macchina in questione
 
 TO-DO
 □Funzioni di movimentazione, implementazione pulsanti su/giu manuali con encoder per velocità, implementazione corretta di finecorsa.
+
 □Implementazione della cella di carico e la sua calibrazione
+
 □Implementazione interfaccia matlab
+
 □Implementazione estensimetri
+
 □Creazione e implementazione di una calibrazione per il carro (che non si disallinei)
+
 □Calibrazione estensimetri + morsa?
