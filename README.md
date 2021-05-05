@@ -16,7 +16,7 @@ TO-DO
 
 □Implementazione interfaccia matlab
 
-□Implementazione estensimetri
+□Implementazione estensimetri (Strain gauge)
 
 □Creazione e implementazione di una calibrazione per il carro (che non si disallinei)
 
