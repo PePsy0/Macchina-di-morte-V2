@@ -13,14 +13,21 @@ long tareValue;
 Hx711 loadCell(A0, A1);
 
 ////// PIN
+
+//controls
 int upButton = 7 ;  //pulsante per spostare il carro in su
 int downButton =8; //pulsante per spostare il carro in giù 
 int dataButton =9;  //pulsante per inviare gli ultimi dati raccolti
-int dataLed    =10; //led acceso: salvo i dati
 int delaySelector=A0;  //potenziometro per regolare il delay
 int directionPin = 3;
-int stepPin = 2;
-int ledPin = 13;     //posso utilizzare anche il led integrato sulla scheda
+
+//warnings
+int dataLed    =10; //led acceso: salvo i dati
+
+//components
+int stepPin = 2;      //motori
+int ledPin  = 13;     //posso utilizzare anche il led integrato sulla scheda
+int gagePin = A1;     //ingresso hx711 per estensimetro  
 
 /////  stato pulsanti
 boolean upStatus = false;
@@ -45,6 +52,10 @@ int del3=1700;
 int del4=2400;
 int del5=3000;
 
+//segnali estensimetro 
+int gSignal =0; //racchiude info allungamento 
+int gSignalPercent = 0; //allungamento percentuale
+
 
 /*****************************
          Data
@@ -64,6 +75,7 @@ int counter =0;
          SETUP
 *****************************/
 void setup() {
+  
    //Up Button
    pinMode(upButton, INPUT);
    
@@ -91,11 +103,20 @@ void setup() {
    pinMode(stepPin, OUTPUT);
    digitalWrite(directionPin, dir);
    digitalWrite(stepPin, LOW);
+
+   //Estensimetro  
+   pinMode(gagePin, INPUT);
 }
 /*****************************
          LOOP
 *****************************/
 void loop() {
+
+ Serial.print("Initial gSignal: ");
+ getGage(); //stampa i dati dell' estensimetro 
+ Serial.print("Ready");
+ Serial.println();
+ 
  if(!dataStatus && digitalRead(dataButton)) dataStatus=true; //i dati della prossima prova vengono salvati
  if(dataStatus && digitalRead(dataButton)) dataStatus =false;
  if(dataStatus) digitalWrite(dataLed,HIGH);
@@ -129,7 +150,7 @@ int  getDelay(){
 }
 
 /*
- * CIclo di salita. Può salvare dati 
+ * Ciclo di salita. Può salvare dati 
  */
 void upRoutine(){
   blinking(10, 100);  //il led integrato lampeggia rapidamente 10 volte: inizio routine up
@@ -137,6 +158,7 @@ void upRoutine(){
   digitalWrite(directionPin, LOW);
   long startTime=millis();
   while(upStatus && !digitalRead(upButton)){//premere up per terminare il ciclo
+    getGage(); //stampa i dati dell'estensimetro 
     manualSpeedDelay=getDelay();
     digitalWrite(stepPin, HIGH);
     delayMicroseconds(pulseLength);
@@ -171,6 +193,7 @@ void downRoutine(){
    if(debug) Serial.println("DOWN");
    digitalWrite(directionPin, HIGH);
    while(downStatus && !digitalRead(downButton)){//premere down per terminare il ciclo
+    //getGage(); //stampa i dati dell' estensimetro  //-------------DA ABILITARE! 
     manualSpeedDelay=getDelay();
     digitalWrite(stepPin, HIGH);
     delayMicroseconds(pulseLength);
@@ -196,6 +219,20 @@ void blinking(int n, int ledDel){
     delay(ledDel);
     digitalWrite(ledPin,LOW);
   }
+}
+
+/**************************
+ *       ESTENSIMETRI
+***************************/
+void getGage(){
+    gSignal = analogRead(gagePin);
+    gSignalPercent = map(gSignal, 0, 700, 0, 100);
+    Serial.print("gSignal: ");
+    Serial.print(gSignal);
+    Serial.print(" | ");
+    Serial.print(gSignalPercent);
+    Serial.println("%");
+    delay(15);
 }
 
 
